@@ -1,0 +1,530 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html>
+<head>
+	<!-- linode -->
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  	<link rel="apple-touch-icon" href="/apple_touch_icon.png"></link>
+	<title>NowDoThis</title>
+	<meta name="viewport" content="width = 250"/>
+	<style type="text/css">
+	
+		ul,ol { list-style: none; }
+		h1,h2,h3,h4,h5,h6,pre,code { font-size: 1em; }
+		ul,ol,li,h1,h2,h3,h4,h5,h6,pre,form,body,html,p,blockquote,fieldset,input { margin: 0; padding: 0; }
+		a img,:link img,:visited img { border: none; }
+		address { font-style: normal; }
+			
+		body { color: #000000; background-color: #FFFFFF; margin: 0px auto; font: 12px Arial; padding-bottom: 16px; text-align: center;}
+		
+		a {color: #aaa; text-decoration: none; cursor: pointer; }
+		
+		h1 { font-size: 36px; padding-bottom: 36px; padding-left: 4px; padding-right: 4px; margin: 0px;}
+		h2 { font-size: 48px; color: green; margin: 0px;}
+		
+		#tabs { margin: auto 0px; padding-top: 10px; }
+		
+		#tabs li { cursor: pointer; display: inline; color: #999999; padding: 5px; }
+		#tabs li.current { color: #000000;}
+		
+		#app, #controls, #about { padding-top: 35px; }
+
+		#link { padding-top: 16px; padding-bottom: 16px; font: 13px Arial; }
+		
+		#list {margin-bottom: 12px; }
+		
+		#about h1 { font-size: 26px;}
+
+	</style>
+	<script src="prototype.js" type="text/javascript"></script>
+</head>
+<body>
+<script type="text/javascript" charset="utf-8">
+	NowDoThis = {};
+	
+	NowDoThis.languages = {}
+	
+	// germen
+	NowDoThis.languages.de = {
+		list: ["ein nickerchen machen","stift kaufen","zimmer aufräumen"],
+		done: "fertig.",
+		alldone: "alles erledigt!",
+		editlist: "liste editieren",
+		save: "speichern",
+		cancel: "abbrechen",
+		about: "über uns",
+		aboutText: '<h1>wie planst du deinen tag? ein kalender zwingt dich, das unberechenbare mit einzukalkulieren. eine to-do-liste kann dich mit daten überwältigen. ich wollte, dass mir ein \'boss\' sagt, was ich tun soll. viel spaß mit unserem kostenlosen tool.<br/><br/>und <a href="http://nowdothis.tumblr.com/">wir haben einen blog</a>.<br/><br/>und <a href="mailto:nowdothis<br>@gmail.com">nowdothis<br>@gmail.com</a>.<br/><br/>gemacht von <a href="http://jakoblodwick.com">Jakob Lodwick</a> und <a href="http://williamcotton.tumblr.com/">William Cotton</a>.<br/><br/> deutsche übersetzung von <a href="http://mareenfischinger.de/">Mareen Fischinger.</a></h1>',
+		ok: "ok danke",
+		or: "oder"
+	}
+	
+	// english
+	NowDoThis.languages.en = {
+		list: ["take a nap","buy pen","organize room"],
+		done: "done.",
+		alldone: "all done!",
+		editlist: "edit list",
+		save: "save",
+		cancel: "cancel",
+		about: "about",
+		aboutText: '<h1>how do you organize your day? a calendar requires you to predict the unpredictable. a todo list can overwhelm you with data. I wanted a \'boss\' to tell me what to do. enjoy this free tool.<br/><br/>and <a href="http://nowdothis.tumblr.com/">we have a blog</a>.<br/><br/>and <a href="mailto:nowdothis@gmail.com">nowdothis<br>@gmail.com</a>.<br/><br/>built by <a href="http://jakoblodwick.com">Jakob Lodwick</a> and <a href="http://williamcotton.tumblr.com/">William Cotton</a>.</h1>',
+		ok: "ok thanks",
+		or: "or"
+	}
+	
+	// swedish
+	NowDoThis.languages.sv = {
+		list: ["ta tupplur","köp penna","organisera rum"],
+		done: "klart.",
+		alldone: "allt klart!",
+		editlist: "ändra lista",
+		save: "spara",
+		cancel: "ångra",
+		about: "om",
+		aboutText: '<h1>hur organiserar du din dag? en kalender tvingar dig att förutsäga det oförutsägbara. en att-göra-lista kan överväldiga dig med data. jag ville ha en \'chef\' som kunde säga åt mig vad jag skulle göra. ha så skoj med det här gratis verktyget. <br/><br/>och <a href="http://nowdothis.tumblr.com/">vi har en blog</a>.<br/><br/>och <a href="mailto:nowdothis@gmail.com">nowdothis@gmail.com</a>.<br/><br/>byggd av <a href="http://jakoblodwick.com">Jakob Lodwick</a> och <a href="http://williamcotton.tumblr.com/">William Cotton</a>.<br/><br/>översatt till svenska av <a href="http://www.iacobaeus.com">Henrik Iacobæus</a></h1>',
+		ok: "ok tack",
+		or: "eller"
+	}
+	
+	// croatian
+	NowDoThis.languages.hr = {
+		list: ["odspavati","kupiti olovku","pospremiti sobu"],
+		done: "izvršeno.",
+		alldone: "sve izvršeno.",
+		editlist: "uredi listu",
+		save: "spremi",
+		cancel: "odustani",
+		about: "o nowdothis",
+		aboutText: '<h1>kako organizirate svoj dan? kalendar zahtjeva da predvidite nepredvidivo. ova "todo lista" vas može preplaviti podacima. Želio sam da mi \'šef\' kaže što trebam raditi. Uživajte u ovom besplatnom alatu.<br/><br/>i <a href="http://nowdothis.tumblr.com/">posjetite naš blog</a>.<br/><br/>i <a href="mailto:nowdothis@gmail.com">nowdothis<br>@gmail.com</a>. <br/><br/>kreirali <a href="http://jakoblodwick.com">Jakob Lodwick</a> i <a href="http://williamcotton.tumblr.com/">William Cotton</a>.<br/><br/>Na hrvatski preveo Davor Grubelić.</h1>',
+		ok: "ok hvala",
+		or: "ili"
+	}
+	
+	// romanian 
+	NowDoThis.languages.ro = {
+		list: ["trage un pui de somn","cumpara un pix","aranjaza camera"],
+		done: "facut.",
+		alldone: "totul e terminat!",
+		editlist: "modifica lista",
+		save: "salveaza",
+		cancel: "anuleaza",
+		about: "despre",
+		aboutText: '<h1>Cum iti organizezi ziua ? cu un calendar ai nevoie sa prezici imposibilu. un todo list poate sa te depaseasca. Vrei sa iti zica cineva ce sa faci ? Atunci asta e unealta protrivta.<br/><br/>and <a href="http://nowdothis.tumblr.com/">Avem blog [engleza]</a>.<br/><br/>si <a href="mailto:nowdothis@gmail.com">nowdothis<br>@gmail.com</a>.<br/><br/>construit de <a href="http://jakoblodwick.com">Jakob Lodwick</a> si <a href="http://williamcotton.tumblr.com/">William Cotton</a>.<br/><br/><a href="http://blog.w2.ro">necenzurat</a></h1>',
+		ok: "ok merci",
+		or: "or"
+	}
+	
+	// thai
+	NowDoThis.languages.th = {
+        list: ["นอนพักสักแป๊บ","ซื้อปากกา","จัดห้อง"],
+        done: "ทำเสร็จแล้ว.",
+        alldone: "ทำเสร็จหมดแล้ว!",
+        editlist: "แก้ไขรายการ",
+        save: "จัดเก็บ",
+        cancel: "ยกเลิก",
+        about: "เกี่ยวกับ",
+        aboutText: '<h1>คุณจัดการชีวิตประจำวันของคุณอย่างไร? ใช้ปฏิทินที่ต้องการให้คุณคาดเดาในสิ่งที่คาดเดาไม่ได้ หรือว่ารายการงานที่ต้องทำที่เต็มไปด้วยช้อมูลต่าง ๆ ที่ทำให้คุณสับสน ฉันต้องการ \'เจ้านาย\' เพื่อบอกฉันว่าฉันควรจะทำอะไร มีความสุขกับเครื่องมือที่ใช้ได้ฟรีอันนี้ <br /><br /> อ้อ <a href="http://nowdothis.tumblr.com/">เรายังมี blog</a>.<br /><br /> และ <a href="mailto:nowdothis@gmail.com">nowdothis<br>@gmail.com</a>.<br /><br  /> จัดทำโดย <a href="http://jakoblodwick.com">Jakob Lodwick</a> and <a href="http://williamcotton.tumblr.com/">William Cotton</a>.<br/><br/>แปลเป็นภาษาไทยโดยพฤษภ์ <a href="http://project-ile.net/lulu/blog/index.html">บุญมา</a></h1>',
+        ok: "โอเค ขอบคุณ",
+        or: "หรือ"
+	}
+	
+	// NowDoThis.languages.it_1 = {
+	// 	list: ["dormire un po'","comprare una penna","riordinare la stanza"],
+	// 	done: "fatto.",
+	// 	alldone: "hai fatto tutto!",
+	// 	editlist: "modifica lista",
+	// 	save: "salva",
+	// 	cancel: "annulla",
+	// 	about: "info",
+	// 	aboutText: 'come organizzi la tua giornata? un calendario richiede di prevedere l\'imprevedibile. una lista di cose da fare potrebbe travolgerti con troppe informazioni. io volevo un \'capo\' che mi dicesse che cosa fare. divertiti con questo strumento gratuito. e abbiamo anche un blog. e nowdothis@gmail.com. realizzata da Jakob Lodwick e William Cotton. tradotto in italiano da <a href="http://onigiri.tumblr.com">Emanuel Carnevale</a>',
+	// 	ok: "ok grazie",
+	// 	or: "o"
+	// } // Multiple
+	
+	// NEEDS TRANSLATOR THANK YOU
+	// 	NowDoThis.languages.it_2 = {
+	// 		list: ["fa un pisolino","compra una penna","organizza la stanza"],
+	// 		done: "finito.",
+	// 		alldone: "tutto finito!",
+	// 		editlist: "fare una revisione",
+	// 		save: "registra",
+	// 		cancel: "anulla",
+	// 		about: "informazioni",
+	// 		aboutText: "come organizzi il tuo giorno? un calendario esige che preda l'imprevidibile. una lista possa essere troppo informazioni. volevo un dirretore per dirme che cosa fare. divertirti questo attrezzo gratiz. e abbiamo un blog. e nowdothis@gmail.com. ha costruito di Jakob Lodwick e William Cotton.",
+	// 		ok: "ok grazie",
+	// 		or: "o"
+	// 	} // Multiple
+	
+	// portuguese - portugal
+	NowDoThis.languages.pt_pt = {
+		list: ["dormir um bocado","comprar caneta","organizar quarto"],
+		done: "feito.",
+		alldone: "tudo feito!",
+		editlist: "editar lista",
+		save: "guardar",
+		cancel: "cancelar",
+		about: "sobre",
+		aboutText: '<h1>como organizas o teu dia? um calendário requer prever o imprevisível. uma lista de tarefas a fazer pode ser avassaladora com tanta informação. Eu quero um \'chefe\' que me diga o que fazer. disfruta desta ferramenta gratuita.<br/><br/>e <a href="http://nowdothis.tumblr.com/">temos um blog</a>.<br/><br/>e <a href="mailto:nowdothis@gmail.com">nowdothis@gmail.com</a>.<br/><br/>construído por <a href="http://jakoblodwick.com">Jakob Lodwick</a> e <a href="http://williamcotton.tumblr.com/">William Cotton</a>. <br/><br/>traduzido para português por <a href="http://joaoantunes.com">João Antunes</a></h1>',
+		ok: "ok obrigado",
+		or: "ou"
+	}
+
+	// portuguese - brazil
+	NowDoThis.languages.pt_br = {
+		list: ["cochilar","comprar caneta","organizar quarto"],
+		done: "concluído.",
+		alldone: "tudo concluído!",
+		editlist: "editar lista",
+		save: "salvar",
+		cancel: "cancelar",
+		about: "sobre",
+		aboutText: '<h1>como você organiza o seu dia? um calendário exige que você preveja o imprevisível. uma lista de tarefa pode te confundir com tanta informação. eu queria um "chefe" para me dizer o que fazer. aproveita está ferramenta gratuita.<br/><br/>e <a href="http://nowdothis.tumblr.com/">nós temos um blog</a>.<br/><br/>e <a href="mailto:nowdothis@gmail.com">nowdothis@gmail.com</a>.<br/><br/>desenvolvido por <a href="http://jakoblodwick.com">Jakob Lodwick</a> e <a href="http://williamcotton.tumblr.com/">William Cotton</a>.<br/><br/>traduzido para português por Anderson Santos</h1>',
+		ok: "ok obrigado",
+		or: "ou"
+	}
+	
+	// dutch
+	NowDoThis.languages.nl = {
+		list: ["doe een dutje","koop een pen","kamer opruimen"],
+		done: "klaar.",
+		alldone: "helemaal klaar!",
+		editlist: "wijzig lijst",
+		save: "opslaan",
+		cancel: "annuleren",
+		about: "over",
+		aboutText: '<h1>hoe plan jij je dag? een kalender vereist dat je het onvoorspelbare voorspelt. een todo-lijst kan je overspoelen met data. ik wou een \'baas\' die me vertelt wat ik moet doen. veel plezier met dit gratis handigheidje. <br/><br/>en <a href="http://nowdothis.tumblr.com/">we hebben een blog</a>. <br/><br/>en <a href="mailto:nowdothis@gmail.com">nowdothis@gmail.com</a>. <br/><br/>gemaakt door <a href="http://jakoblodwick.com">Jakob Lodwick</a> en <a href="http://williamcotton.tumblr.com/">William Cotton</a>.<br/><br/>vertaald naar het nederlands door <a href="http://www.thomask.nl">Thomas Kuipers</a>.</h1>',
+		ok: "ok bedankt",
+		or: "of"
+	}
+	
+	// french
+	NowDoThis.languages.fr = {
+		list: ["prendre une pause","acheter un stylo","ranger la chambre"],
+		done:"terminé.",
+		alldone:"tout est terminé!",
+		editlist:"modifier la liste",
+		save:"enregistrer",
+		cancel:"annuler",
+		about:"à propos de ",
+		aboutText: '<h1>comment planifier sa journée ? un calendrier exige d\'anticiper les imprévus. une liste de choses à faire peut noyer sous les informations. il me fallait un \'boss\' qui me dise ce que j\'ai à faire. profitez bien de cet outil gratuit.<br/><br/>et <a href="http://nowdothis.tumblr.com/">nous avons aussi un blog</a>.<br/><br/>et <a href="mailto:nowdothis@gmail.com">nowdothis<br>@gmail.com</a>.<br/><br/>une création de <a href="http://jakoblodwick.com">Jakob Lodwick</a> et <a href="http://williamcotton.tumblr.com/">William Cotton</a>.<br/><br/>traduit en français par Elyse Létourneau.</h1>',
+		ok:"ok merci",
+		or:"ou"
+	}
+	
+	// polish
+	NowDoThis.languages.pl = {
+		list: ["zdrzemnij się","kup długopis","posprzątaj pokój"],
+		done: "zrobione.",
+		alldone: "wszystko zrobione!",
+		editlist: "edytuj listę",
+		save: "zapisz",
+		cancel: "anuluj",
+		about: "pomoc",
+		aboutText: '<h1>w jaki sposób organizujesz swój dzień? kalendarz wymaga przewidzenia nieprzewidywalnego, listy zadań do zrobienia mogą przytłoczyć cię danymi. potrzebowałem "szefa", który mówi mi, co mam robić. ciesz się tym darmowym narzędziem.<br/><br/> i <a href="http://nowdothis.tumblr.com/">mamy bloga</a>.<br/><br/> i <a href="mailto:nowdothis@gmail.com">nowdothis@gmail.com</a>.<br/><br/> stworzyli: <a href="http://jakoblodwick.com">Jakob Lodwick</a> i <a href="http://williamcotton.tumblr.com/">William Cotton</a>.<br/><br/> tłumaczenie na polski - <a href="http://wolnemiasto.blogspot.com">Bartek</a></h1>',
+		ok: "ok, dzięki",
+		or: "albo"
+	}
+	
+	// spanish
+	NowDoThis.languages.es = {
+		list: ["tomar una siesta","comprar una birome","ordenar la habitación"],
+		done: "hecho.",
+		alldone: "todo listo!",
+		editlist: "modificar lista",
+		save: "guardar",
+		cancel: "cancelar",
+		about: "acerca",
+		aboutText: '<h1>¿cómo organizas tu día? un calendario te obliga a predecir lo impredecible. una lista de tareas pendientes puede abrumarte con datos. quise un \'jefe\' que me diga qué hacer. disfruta esta herramienta de manera gratuita. <br/><br/>y <a href="http://nowdothis.tumblr.com/">tenemos un blog</a>. <br/><br/>y <a href="mailto:nowdothis@gmail.com">nowdothis@gmail.com</a>. <br/><br/>llevado a cabo por <a href="http://jakoblodwick.com">Jakob Lodwick</a> y <a href="http://williamcotton.tumblr.com/">William Cotton</a>.<br/><br/>traducido al español por <a href="http://frng.tumblr.com/">Francisco Giordano</a>.</h1>',
+		ok: "ok gracias",
+		or: "o"
+	}
+	
+	// lithuanian
+	NowDoThis.languages.lt = {
+		list: ["pamiegoti","nusipirkti rašiklį","susitvarkyti kambarį"],
+		done: "padaryta.",
+		alldone: "viskas padaryta!",
+		editlist: "redaguoti sąrašą",
+		save: "išsaugoti",
+		cancel: "atšaukti",
+		about: "apie",
+		aboutText: '<h1>kaip tu organizuoji savo dieną? kalendorius tavęs reikalauja suplanuoti nesuplanuojamus dalykus. darbų sąrašas tave gali užversti duomenimis. aš norėjau, kad \'vadovas\' man pasakytų ką daryti. mėgaukis šiuo laisvu įrankiu. <br/><br/>ir <a href="http://nowdothis.tumblr.com/">mes turime blogą</a>. <br/><br/>ir <a href="mailto:nowdothis@gmail.com">nowdothis@gmail.com</a>. <br/><br/>sukūrė <a href="http://jakoblodwick.com">Jakob Lodwick</a> ir <a href="http://williamcotton.tumblr.com/">William Cotton</a>.<br/><br/>į lietuvių kalbą išvertė <a href="http://vytautas.jakutis.lt/">Vytautas Jakutis</a>.</h1>',
+		ok: "ok dėkui",
+		or: "arba"
+	}
+
+	// italian
+	NowDoThis.languages.it = {
+		list: ["schiaccia un pisolino", "compra una penna", "riordina la stanza"],
+		done: "fatto.",
+		alldone: "finito!",
+		editlist: "modifica la lista",
+		save: "salva",
+		cancel: "cancella",
+		about: "info",
+		aboutText: '<h1>come organizzi la tua giornata? un calendario richiede che tu possa prevedere l\'imprevedibile, e una lista di todo\'s puo\' inondarti di dati. volevo un \'capo\' che mi dicesse cosa fare. questo strumento e\' per te, gratis. <br/><br/>ehi, <a href="http://nowdothis.tumblr.com/">e abbiamo un blog</a>. <br/><br/>e <a href="mailto:nowdothis@gmail.com">nowdothis@gmail.com</a>. <br/><br/>sviluppato da <a href="http://jakoblodwick.com">Jakob Lodwick</a> e <a href="http://williamcotton.tumblr.com/">William Cotton</a>. <br/><br/>tradotto in italiano da <a href="http://matteo.starri.googlepages.com/">Matteo</a>.</h1>',
+		ok: "ok grazie",
+		or: "o"
+	}
+	
+	// chinese
+	NowDoThis.languages.zh = {
+		list: ["小睡一會","買筆","整理房間"],
+		done: "好了",
+		alldone: "都好了！",
+		editlist: "編輯清單",
+		save: "儲存",
+		cancel: "取消",
+		about: "關於",
+		aboutText:'<h1>你怎麼計畫你的一天呢？一個行事曆需要你估計不可預期的事，而一個待辦清單可能讓你淹沒在一堆事情中。我想要一個「老闆」告訴我現在該做什麼。請盡情使用這個免費的工具，<br/><br/><a href="http://nowdothis.tumblr.com/">而我們有個部落格及</a>。<br/><br/><a href="mailto:nowdothis@gmail.com">nowdothis@gmail.com</a> 。<br/><br/><a href="http://jakoblodwick.com">Jakob Lodwick</a> 及 <a href="http://williamcotton.tumblr.com/">William Cotton</a> 的作品。<br/><br/>由 <a href="http://blog.reder.ws">Reder</a> 中文化。</h1>',
+		ok: "好，謝謝",
+		or: "或"
+	}
+	
+	// russian 
+	NowDoThis.languages.ru = {
+	        list: ["ляг поспи","купи ручку","прибери в комнате"],
+	        done: "готово.",
+	        alldone: "все сделано!",
+	        editlist: "редактировать список",
+	        save: "сохранить",
+	        cancel: "отменить",
+	        about: "о проекте",
+	        aboutText: '<h1>как вы организовываете свой день? календарь требует предсказывать непредсказуемое, список дел оказывается перегружен данными. я хотел, чтобы «шеф» говорил мне, что делать. радуйтесь этой штуке на здоровье.<br/><br/>а еще <a href="http://nowdothis.tumblr.com/">у нас есть блог</a>.<br/><br/>и <a href="mailto:nowdothis@gmail.com">nowdothis<br>@gmail.com</a>.<br/><br/>разработчики <a href="http://jakoblodwick.com">Jakob Lodwick</a> и <a href="http://williamcotton.tumblr.com/">William Cotton</a>.</h1>',
+	        ok: "хорошо, спасибо",
+	        or: "или"
+	}
+	
+	NowDoThis.load = function() {
+		NowDoThis.cookieExpiresDate = new Date((new Date).getTime()+86400000000).toGMTString();
+		NowDoThis.currentLanguage = NowDoThis.getLanguage();
+		NowDoThis.createDom();	
+		NowDoThis.getListCookie();
+		NowDoThis.parseList();
+		NowDoThis.createTabs();
+		NowDoThis.selectTab(0);
+	}
+	
+	NowDoThis.getLanguage = function() {
+		var language = Try.these(
+	      	function() { return navigator.language },
+	      	function() { return navigator.browserLanguage },
+	      	function() { return navigator.systemLanguage },
+			function() { return navigator.userLanguage }
+		) || "en";
+		language = language.toLowerCase().replace("-","_");		
+		if (language && (NowDoThis.languages[language] || NowDoThis.languages[language.slice(0,2)])) {
+			if (NowDoThis.languages[language]) {
+				return NowDoThis.languages[language];
+			}
+			if (NowDoThis.languages[language.slice(0,2)]) {
+				return NowDoThis.languages[language.slice(0,2)];
+			}
+		}
+		else {
+			return NowDoThis.languages.en;
+		}
+	}
+	
+	NowDoThis.createDom = function() {
+		var tabs = new Element('div', { 'id': 'tabs'});
+		var app = new Element('div', { 'id': 'app'});
+		var tasks = new Element('div', { 'id': 'tasks'});
+		var done = new Element('div', { 'id': 'done'});
+		
+		var ol = new Element('ol')
+		tabs.insert(ol);
+		
+		done.style.display = "none";
+		var allDone = new Element('h2', { 'id': 'all-done'}).update(NowDoThis.currentLanguage.alldone);
+		done.insert(allDone);
+		
+		var link = new Element('div', { 'id': 'link'});
+		var editButton = new Element('a', { 'id': 'edit-list'}).update(NowDoThis.currentLanguage.editlist);
+		link.insert(editButton);
+		Event.observe(editButton, "click", NowDoThis.editList);
+		
+		app.insert(tasks);
+		app.insert(done);
+		app.insert(link);
+		
+		var controls = new Element('div', { 'id': 'controls'});
+		controls.style.display = "none";
+		
+		var form = new Element('form', { 'method': 'post'})
+		var textarea = new Element('textarea', { 'id': 'list', 'name': 'list', 'cols': '24', 'rows': '8'});
+		var saveButton = new Element('input', { 'id': 'save', 'type': 'button', 'value': NowDoThis.currentLanguage.save});
+		Event.observe(saveButton, "click", NowDoThis.saveList);
+		var cancelButton = new Element('a', { 'id': 'cancel'}).update(NowDoThis.currentLanguage.cancel);
+		Event.observe(cancelButton, "click", NowDoThis.cancelList);
+		
+		form.insert(textarea);
+		form.insert("<br/>");
+		form.insert(saveButton);
+		form.insert(" " + NowDoThis.currentLanguage.or + " ");
+		form.insert(cancelButton);
+		
+		var aboutButton = new Element('a', { 'id': 'about-button' }).update(NowDoThis.currentLanguage.about);
+		Event.observe(aboutButton, "click", function() { controls.hide(); about.show(); return false; });
+		
+		controls.insert(form);
+		controls.insert("<br/>");
+		controls.insert(aboutButton);
+		
+		var about = new Element('div', { 'id': 'about' });
+		about.style.display = "none";
+		var okButton = new Element('a', { 'id': 'ok-thanks'}).update(NowDoThis.currentLanguage.ok);
+		Event.observe(okButton, "click", function() { about.hide(); controls.show(); return false; });
+		
+		about.insert(NowDoThis.currentLanguage.aboutText);
+		about.insert(okButton);
+		
+		$(document.body).insert(tabs);
+		$(document.body).insert(app);
+		$(document.body).insert(controls);
+		$(document.body).insert(about);		
+	}
+	
+	NowDoThis.cancelList = function() {
+		$('controls').hide();
+		$('app').show();
+		$('tabs').show();
+		return false;
+	}
+	
+	NowDoThis.editList = function() {
+		$('app').hide();
+		$('controls').show();
+		$('tabs').hide();
+		return false;
+	}
+	
+	NowDoThis.saveList = function() {
+		if ($('task'))
+			$('task').remove()
+		NowDoThis.setListCookie();
+		$('controls').hide();
+		$('app').show();
+		NowDoThis.list = $('list').value.split("\n").reject(function(item) { return /^\s*$/.match(item) });
+		NowDoThis.parseList();
+		NowDoThis.createTabs();
+		NowDoThis.selectTab(0);
+	}
+	
+	NowDoThis.setListCookie = function() {
+		if (document.domain == "localhost" || document.domain == "dabmob.com") {
+			document.cookie = "list=" + escape( $('list').value.replace(/ /g,"+").replace(/\n/g,"\r\n") ) + ";expires=" + NowDoThis.cookieExpiresDate + ";path=/";
+		}
+		else {
+			document.cookie = "list=" + escape( $('list').value.replace(/ /g,"+").replace(/\n/g,"\r\n") ) + ";expires=" + NowDoThis.cookieExpiresDate + ";path=/;domain=.nowdothis.com";
+		}
+	}
+	
+	NowDoThis.getListCookie = function() {
+		if (document.cookie.split("list=")[1]) {
+			NowDoThis.list = unescape(document.cookie.split("list=")[1].split(";")[0]).replace(/\+/g," ").split("\r\n");
+		}
+		else {
+			NowDoThis.list = NowDoThis.currentLanguage.list;
+		}
+		$('list').value = unescape(NowDoThis.list.join("\n"));
+			
+	}
+	
+	NowDoThis.makeTask = function() {
+		if (NowDoThis.selectedTab.tasks.size() == 0) {
+			$('done').show();
+			return
+		}
+		var taskDiv = new Element('div', { 'class': 'task', 'id': 'task' });
+		var taskH1 = new Element('h1').update(unescape(NowDoThis.selectedTab.tasks[0]) + ".");
+		var taskDone = new Element('input', { 'type': 'button', 'value': NowDoThis.currentLanguage.done });
+		Event.observe(taskDone, "click", NowDoThis.completeTask);
+		taskDiv.insert(taskH1);
+		taskDiv.insert(taskDone);
+		$('tasks').insert(taskDiv);
+	}
+	
+	NowDoThis.completeTask = function() {
+		$('task').remove();
+		NowDoThis.selectedTab.tasks = NowDoThis.selectedTab.tasks.slice(1);
+		$('list').value = "";
+		if (NowDoThis.tabs.size() > 1) {
+			NowDoThis.tabs.each(function(tab, i) {
+				if (i > 0) {
+					$('list').value += "\n\n";
+
+				}
+				$('list').value += tab.name;
+				if (tab.tasks.size() > 0) {
+					$('list').value += "\n";
+				}
+				$('list').value += tab.tasks.join("\n");
+			});
+		}
+		else {
+			$('list').value = NowDoThis.selectedTab.tasks.join("\n");
+		}
+		NowDoThis.setListCookie();
+		NowDoThis.makeTask();
+	}
+	
+	NowDoThis.parseList = function() {
+		var list_array = $('list').value.split("\n").reject(function(item) { return /^\s*$/.match(item) });		
+		NowDoThis.tabs = [];
+		var current_tab_index = -1;
+		list_array.each(function(item) {
+			if (item.slice(0,1) == "@") {
+				current_tab_index++;
+				NowDoThis.tabs[current_tab_index] = { name: item, tasks: [] };
+			}
+			else if (current_tab_index == -1) {
+				current_tab_index++;
+				NowDoThis.tabs[current_tab_index] = { name: "@now", tasks: [item] };
+			}
+			else {
+				NowDoThis.tabs[current_tab_index].tasks.push(item);
+			}
+		});
+		if (NowDoThis.tabs.size() == 0) {
+			NowDoThis.tabs[0] = { name: "@now", tasks: [] };
+		}
+	}
+	
+	NowDoThis.createTabs = function() {
+		$('tabs').childNodes[0].update("");
+		if (NowDoThis.tabs.size() > 1) {
+			NowDoThis.tabs.each(function(tab, index) {
+				var li = new Element('li', { 'id': 'tab-' + index }).update(tab.name);
+				Event.observe(li, "click", function() { NowDoThis.selectTab(index) });
+				$('tabs').childNodes[0].insert(li);
+			});
+		}
+		$('tabs').show();
+	}
+	
+	NowDoThis.selectTab = function(index) {
+		$('done').hide();
+		if ($('task'))
+			$('task').remove();
+		NowDoThis.selectedTab = NowDoThis.tabs[index];
+		$('tabs').childNodes[0].childElements().each(function(tab) { tab.className = ""; });
+		if ($('tab-' + index)) {
+			$('tab-' + index).className = "current";
+		}
+		NowDoThis.makeTask();
+	}
+
+	Event.observe(window, "load", NowDoThis.load);
+	
+</script>
+<script type="text/javascript">
+var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+var pageTracker = _gat._getTracker("UA-3552355-8");
+pageTracker._initData();
+pageTracker._trackPageview();
+</script>
+</body>
+</html>
