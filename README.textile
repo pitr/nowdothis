@@ -1,0 +1,16 @@
+h1. About
+
+p. This is a copy of "NowDoThis":http://nowdothis.com which contains a simple ToDo list. Original developers have a "blog":http://nowdothis.tumblr.com that dates back to August 2008. This is a fork.
+
+h1. Deploying
+
+h2. With heroku
+
+bc. $ get install heroku sinatra
+$ heroku create
+$ git push heroku master
+
+h2. With static hosting
+
+p. Copy content of public folder to server root
+
