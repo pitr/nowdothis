@@ -1,8 +1,8 @@
 <!DOCTYPE HTML>
 <html manifest="cache.manifest">
 <head>
-	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-	<link rel="apple-touch-icon" href="/apple_touch_icon.png"></link>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<link rel="apple-touch-icon" href="/apple_touch_icon.png" />
 	<meta name="viewport" content="user-scalable=no, width=device-width, initial-scale=1.0, maximum-scale=1.0"/>
 	<meta name="apple-mobile-web-app-capable" content="yes"/>
 	<title>NowDoThis</title>
@@ -431,7 +431,10 @@
 			return
 		}
 		var taskDiv = new Element('div', { 'class': 'task', 'id': 'task' });
-		var taskH1 = new Element('h1').update(unescape(NowDoThis.selectedTab.tasks[0]) + ".");
+		var t = unescape(NowDoThis.selectedTab.tasks[0]);
+		if(t.charAt(t.length - 1) != '.')
+			t = t + ".";
+		var taskH1 = new Element('h1').update(t);
 		var taskDone = new Element('input', { 'type': 'button', 'value': NowDoThis.currentLanguage.done });
 		Event.observe(taskDone, "click", NowDoThis.completeTask);
 		taskDiv.insert(taskH1);
