@@ -1,11 +1,11 @@
 <!DOCTYPE HTML>
 <html manifest="cache.manifest">
 <head>
-	<!-- linode -->
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-  	<link rel="apple-touch-icon" href="/apple_touch_icon.png"></link>
+	<link rel="apple-touch-icon" href="/apple_touch_icon.png"></link>
+	<meta name="viewport" content="user-scalable=no, width=device-width, initial-scale=1.0, maximum-scale=1.0"/>
+	<meta name="apple-mobile-web-app-capable" content="yes"/>
 	<title>NowDoThis</title>
-	<meta name="viewport" content="width = 250"/>
 	<style type="text/css">
 	
 		ul,ol { list-style: none; }
@@ -306,10 +306,10 @@
 	
 	NowDoThis.getLanguage = function() {
 		var language = Try.these(
-	      	function() { return navigator.language },
-	      	function() { return navigator.browserLanguage },
-	      	function() { return navigator.systemLanguage },
-			function() { return navigator.userLanguage }
+		function() { return navigator.language },
+		function() { return navigator.browserLanguage },
+		function() { return navigator.systemLanguage },
+		function() { return navigator.userLanguage }
 		) || "en";
 		language = language.toLowerCase().replace("-","_");		
 		if (language && (NowDoThis.languages[language] || NowDoThis.languages[language.slice(0,2)])) {
@@ -411,12 +411,7 @@
 	}
 	
 	NowDoThis.setListCookie = function() {
-		if (document.domain == "localhost" || document.domain == "dabmob.com") {
-			document.cookie = "list=" + escape( $('list').value.replace(/ /g,"+").replace(/\n/g,"\r\n") ) + ";expires=" + NowDoThis.cookieExpiresDate + ";path=/";
-		}
-		else {
-			document.cookie = "list=" + escape( $('list').value.replace(/ /g,"+").replace(/\n/g,"\r\n") ) + ";expires=" + NowDoThis.cookieExpiresDate + ";path=/;domain=.nowdothis.com";
-		}
+		document.cookie = "list=" + escape( $('list').value.replace(/ /g,"+").replace(/\n/g,"\r\n") ) + ";expires=" + NowDoThis.cookieExpiresDate + ";path=/";
 	}
 	
 	NowDoThis.getListCookie = function() {
@@ -452,7 +447,6 @@
 			NowDoThis.tabs.each(function(tab, i) {
 				if (i > 0) {
 					$('list').value += "\n\n";
-
 				}
 				$('list').value += tab.name;
 				if (tab.tasks.size() > 0) {
