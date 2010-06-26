@@ -6,11 +6,10 @@ h1. Deploying
 
 h2. With heroku
 
-bc. $ get install heroku sinatra
+bc. $ gem install heroku sinatra
 $ heroku create
 $ git push heroku master
 
 h2. With static hosting
 
-p. Copy content of public folder to server root
-
+p. Copy content of public folder to server root. Set up your server to respond to .manifest files with Content-Type of 'text/cache-manifest'.
