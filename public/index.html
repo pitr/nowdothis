@@ -432,7 +432,10 @@
 			return
 		}
 		var taskDiv = new Element('div', { 'class': 'task', 'id': 'task' });
-		var taskH1 = new Element('h1').update(unescape(NowDoThis.selectedTab.tasks[0]) + ".");
+		var t = unescape(NowDoThis.selectedTab.tasks[0]);
+		if(t.charAt(t.length - 1) != '.')
+			t = t + ".";
+		var taskH1 = new Element('h1').update(t);
 		var taskDone = new Element('input', { 'type': 'button', 'value': NowDoThis.currentLanguage.done });
 		Event.observe(taskDone, "click", NowDoThis.completeTask);
 		taskDiv.insert(taskH1);
