@@ -352,7 +352,7 @@
 		controls.style.display = "none";
 		
 		var form = new Element('form', { 'method': 'post'})
-		var textarea = new Element('textarea', { 'id': 'list', 'name': 'list', 'cols': '24', 'rows': '8'});
+		var textarea = new Element('textarea', { 'id': 'list', 'name': 'list', 'cols': '24', 'rows': '15'});
 		var saveButton = new Element('input', { 'id': 'save', 'type': 'button', 'value': NowDoThis.currentLanguage.save});
 		Event.observe(saveButton, "click", NowDoThis.saveList);
 		var cancelButton = new Element('a', { 'id': 'cancel'}).update(NowDoThis.currentLanguage.cancel);
